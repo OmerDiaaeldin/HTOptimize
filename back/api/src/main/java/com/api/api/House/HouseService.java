@@ -1,3 +1,5 @@
+package com.api.api.house;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

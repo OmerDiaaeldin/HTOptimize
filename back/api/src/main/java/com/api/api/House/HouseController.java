@@ -1,3 +1,5 @@
+package com.api.api.house;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +15,10 @@ public class HouseController {
     // GET /house - Get all houses
     @GetMapping
     public List<House> getAllHouses() {
-        return houseService.getAllHouses();
-    }
-
-    // GET /house/{id} - Get a house by ID
+            return houseService.getAllHouses();
+        }
+    
+        // GET /house/{id} - Get a house by ID
     @GetMapping("/{id}")
     public House getHouseById(@PathVariable String id) {
         return houseService.getHouseById(id).orElseThrow(() -> new RuntimeException("House not found"));
