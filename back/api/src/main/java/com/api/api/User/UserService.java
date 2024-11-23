@@ -1,4 +1,4 @@
-package com.api.api.user;
+package com.api.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,16 +31,16 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    // Get a user by username
-    public Optional<User> getUserByUsername(String username) {
-        return Optional.ofNullable(userRepository.findByUsername(username));
+    // Get a user by userName
+    public Optional<User> getUserByUserName(String userName) {
+        return Optional.ofNullable(userRepository.findByUserName(userName));
     }
 
     // Update a user
     public User updateUser(String id, User updatedUser) {
         return userRepository.findById(id)
                 .map(existingUser -> {
-                    existingUser.setUsername(updatedUser.getUsername());
+                    existingUser.setUserName(updatedUser.getUserName());
                     existingUser.setPassword(updatedUser.getPassword());
                     existingUser.setHouse(updatedUser.getHouse());
                     return userRepository.save(existingUser);

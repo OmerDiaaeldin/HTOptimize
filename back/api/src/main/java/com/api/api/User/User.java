@@ -1,4 +1,4 @@
-package com.api.api.user;
+package com.api.api;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -46,7 +46,7 @@ public class User {
         this.password = password;
     }
 
-    public house getHouse(){
+    public House getHouse(){
         return house;
     }
 
@@ -58,7 +58,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", house=" + house +
                 '}';

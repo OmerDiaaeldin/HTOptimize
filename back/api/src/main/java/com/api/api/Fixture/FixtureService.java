@@ -1,5 +1,5 @@
 
-package com.api.api.fixture;
+package com.api.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

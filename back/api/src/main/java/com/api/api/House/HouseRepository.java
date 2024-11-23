@@ -1,4 +1,4 @@
-package com.api.api.house;
+package com.api.api;
 
 import java.util.List;
 

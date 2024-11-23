@@ -1,4 +1,4 @@
-package com.api.api.user;
+package com.api.api;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 public interface UserRepository extends MongoRepository<User, String> {
     
-    User findByUsername(String username);
+    User findByUserName(String userName);
 }

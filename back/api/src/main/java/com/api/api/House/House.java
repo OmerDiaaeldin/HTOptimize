@@ -1,4 +1,4 @@
-package com.api.api.house;
+package com.api.api;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

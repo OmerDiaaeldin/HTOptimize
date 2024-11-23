@@ -1,4 +1,4 @@
-package com.api.api.fixture;
+package com.api.api;
 
 
 import org.springframework.data.annotation.Id;
