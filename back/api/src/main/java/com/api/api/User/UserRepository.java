@@ -1,4 +1,4 @@
-package com.api.api;
+package com.api.api.User;
 
 import java.util.List;
 
