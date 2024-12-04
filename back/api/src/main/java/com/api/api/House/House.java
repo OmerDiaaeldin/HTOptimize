@@ -1,4 +1,4 @@
-package com.api.api;
+package com.api.api.House;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +10,22 @@ public class House {
     private String id;
 
     private String address;
+
+    public House(){
+        
+    }
+
+    public House(String address){
+        this.address = address;
+    }
+
+    public String getId(){
+        return this.id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public String getAddress() {
         return address;

@@ -1,4 +1,4 @@
-package com.api.api;
+package com.api.api.House;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,9 +1,11 @@
-package com.api.api;
+package com.api.api.Fixture;
 
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.api.api.House.House;
 
 @Document(collection = "fixtures") // Maps to the "fixtures" collection in MongoDB
 public class Fixture {
