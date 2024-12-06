@@ -1,11 +1,13 @@
 package com.api.api.Fixture;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.api.api.House.House;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "fixtures") // Maps to the "fixtures" collection in MongoDB
@@ -22,11 +24,14 @@ public class Fixture {
 
     private List<Float> consumption; // Represents consumption data stored as an array in MongoDB
 
+     @LastModifiedDate // Automatically updated when the document is modified
+    private LocalDateTime lastOn; // Field to store the last updated timestamp
+
     // Default constructor
     public Fixture() {}
 
     // Constructor to initialize all fields
-    public Fixture(boolean on, float maximumRate, House house, List<Float> consumption) {
+    public Fixture(boolean on, float maximumRate, House house, List<Float> consumption, LocalDateTime lastOn) {
         this.on = on;
         this.maximumRate = maximumRate;
         this.house = house;
@@ -72,6 +77,14 @@ public class Fixture {
 
     public void setConsumption(List<Float> consumption) {
         this.consumption = consumption;
+    }
+
+    public LocalDateTime getLastOn() {
+        return lastOn;
+    }
+    
+    public void setLastOn(LocalDateTime lastOn) {
+        this.lastOn = lastOn;
     }
 
     @Override

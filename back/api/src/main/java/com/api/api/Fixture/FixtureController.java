@@ -3,6 +3,8 @@ package com.api.api.Fixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +40,18 @@ public class FixtureController {
     // Update a fixture
     @PutMapping("/{id}")
     public Fixture updateFixture(@PathVariable String id, @RequestBody Fixture fixture) {
-        return fixtureService.updateFixture(id, fixture);
+        boolean isOn = fixture.isOn();
+        Fixture updatedFixture = fixture;
+        if(isOn == false){ // the water has been turned off
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime lastOn = fixture.getLastOn();
+
+            long seconds = ChronoUnit.SECONDS.between(now, lastOn);
+            List<Float> updatedConsumption = fixture.getConsumption();
+            updatedConsumption.set(updatedConsumption.size()-1,updatedConsumption.get(updatedConsumption.size()-1) + seconds);
+            updatedFixture.setConsumption(updatedConsumption);
+        }
+        return fixtureService.updateFixture(id, updatedFixture);
     }
 
     // Delete a fixture
