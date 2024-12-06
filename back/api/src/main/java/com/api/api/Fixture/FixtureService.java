@@ -10,9 +10,9 @@ import java.util.Optional;
 @Service
 public class FixtureService {
 
+    @Autowired
     private final FixtureRepository fixtureRepository;
 
-    @Autowired
     public FixtureService(FixtureRepository fixtureRepository) {
         this.fixtureRepository = fixtureRepository;
     }
@@ -24,6 +24,7 @@ public class FixtureService {
 
     // Get all fixtures
     public List<Fixture> getAllFixtures() {
+        System.out.println("Getting all fixtures Service");
         return fixtureRepository.findAll();
     }
 
@@ -32,7 +33,7 @@ public class FixtureService {
         return fixtureRepository.findById(id);
     }
 
-    public ArrayList<Float> getConsumptionById(String id) {
+    public List<Float> getConsumptionById(String id) {
         return fixtureRepository.findById(id).get().getConsumption();
     }
 

@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import apiClient from '@/api';
+import { UserContext } from '@/context/UserContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions, Platform } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
@@ -12,20 +15,42 @@ const App = () => {
     paymentMethod: 'Cash',
   });
 
-  const ratePerLiter = 0.07; // MAD per liter
-  const currentConsumption = [100, 200, 150, 300, 250, 400, 350]; // Example water consumption data
-  const currentTotal = currentConsumption.reduce((acc, value) => acc + value, 0);
-  const currentBillTotal = currentTotal * ratePerLiter;
+  const [ratePerLiter, setRatePerLiter] = useState(0.7); // MAD per liter
+  const [currentTotal, setCurrentTotal] = useState(0);
+  const [currentBillTotal, setCurrentBillTotal] = useState(currentTotal * ratePerLiter);
 
   // Define data for the chart
-  const data = {
-    labels: ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5', 'Day 6', 'Day 7'],
-    datasets: [
-      {
-        data: currentConsumption,
-      },
-    ],
-  };
+  const [consumptionData, setConsumptionData] = useState({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
+
+  useEffect(() => {
+    const getUser = async () => {
+      const savedUser = await AsyncStorage.getItem('user');
+      return savedUser ? JSON.parse(savedUser) : null;
+    }
+    
+    getUser()
+    .then((user) => {
+      const houseId = user.houseId;
+      return apiClient.get(`/house/consumption/${houseId}`)})
+    .then((response) => {
+      console.log("response", response.data)
+      setConsumptionData((prevData) => {
+        const data = response.data.reverse();
+        return {
+          labels: data.map((_: any, index: any) => `Day ${index + 1}`),
+          datasets: [{ data }],
+        }
+      })
+    })
+  }, []);
+
+  useEffect(() => {
+    setCurrentTotal(consumptionData.datasets[0].data.reduce((acc: any, curr: any) => acc + curr, 0));
+    setCurrentBillTotal(currentTotal * ratePerLiter);
+  }, [consumptionData, currentTotal, ratePerLiter]);
 
   const chartConfig = {
     backgroundColor: '#ffffff',
@@ -94,9 +119,9 @@ const App = () => {
       {/* Water Consumption Graph */}
       <View style={styles.graphContainer}>
         <Text style={styles.graphTitle}>Water Consumption</Text>
-        {Platform.OS !== 'web' && (
+        {(
           <LineChart
-            data={data} // Pass the data to the chart
+            data={consumptionData} // Pass the data to the chart
             width={Dimensions.get("window").width}
             height={220}
             chartConfig={chartConfig}

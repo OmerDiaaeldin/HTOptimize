@@ -3,6 +3,7 @@ package com.api.api.House;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,12 @@ public class HouseController {
     @GetMapping("/{id}")
     public House getHouseById(@PathVariable String id) {
         return houseService.getHouseById(id).orElseThrow(() -> new RuntimeException("House not found"));
+    }
+
+    @GetMapping("/consumption/{id}")
+    public List<Float> getConsumptionByHouseId(@PathVariable String id) throws Exception {
+        List<Float> floatList = houseService.getConsumptionByHouseId(id);
+        return floatList;
     }
 
     // POST /house - Create or update a house

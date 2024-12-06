@@ -6,7 +6,8 @@ import Logo from '@/components/Logo';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
 import apiClient from "../api"
-import { useAuth } from '@/auth/AuthContext';
+import { useAuth } from '@/context/AuthContext';
+import { UserContext } from '@/context/UserContext';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +15,7 @@ export default function Login() {
 
   const router = useRouter(); // Access the router for navigation
   const { login } = useAuth();
+  const {loginUser} = useContext(UserContext)
 
 
   
@@ -25,7 +27,10 @@ export default function Login() {
         password,
       });
       if (response.data) {
-        login(response.data);
+        const { jwt, username, houseId } = response.data;
+        login(jwt);
+        loginUser({ username, houseId });
+        
         router.push('/Home');
         Alert.alert('Login successful');
       } else {
