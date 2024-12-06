@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
     // Load token from storage on app start
     useEffect(() => {
         const loadToken = async () => {
-            const savedToken = await AsyncStorage.getItem('token'); // Or SecureStore
+            const savedToken = await AsyncStorage.getItem('token'); 
             if (savedToken) {
                 setToken(savedToken);
             }
@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (newToken) => {
-        await AsyncStorage.setItem('token', newToken); // Or SecureStore
+        await AsyncStorage.setItem('token', newToken);
         setToken(newToken);
     };
 

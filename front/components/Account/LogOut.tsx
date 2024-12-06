@@ -1,12 +1,15 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useAuth } from '@/auth/AuthContext';
 
 const LogOut: React.FC = () => {
   const router = useRouter(); // Access the router for navigation
+  const {logout} = useAuth();
 
   const handleLogOut = () => {
     // Your logout logic, such as clearing user data or token
+    logout(); // Call the logout function from the AuthContext
     console.log('User logged out!');
 
     // Navigate to the Login page after logging out
