@@ -26,13 +26,11 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        System.out.println(user);
         String houseId = user.getHouse().getId();
 
         House house = HouseService.getHouseById(houseId).orElseThrow(() -> new RuntimeException("House not found with ID: " + houseId));
 
         User newUser = new User(user.getUserName(), user.getPassword(), house);
-        System.out.println(newUser);
         return userService.createUser(newUser);
     }
 
