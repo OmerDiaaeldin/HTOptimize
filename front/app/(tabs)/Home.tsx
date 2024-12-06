@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import MenuItem from '../../components/HomePage/MenuItem';
 import HomeContent from '../../components/HomePage/HomeContent';
@@ -7,35 +7,41 @@ import BillingContent from '../../components/HomePage/BillingContent';
 import RecommendationsContent from '../../components/HomePage/RecommendationsContent';
 import InsightsContent from '../../components/HomePage/InsightsContent';
 import UserContainer from '@/components/UserContainer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const user = {
-  name: 'Abir Arhrimaz',
-    address: '123 Main Street, Springfield',
-    profileImage: 'front\assets\images\blank-profile-picture-973460_1280.png', // Replace with the actual URL
-}
+
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState('home');
 
-  
+  const [user, setUser] = useState({
+    username: 'John Doe',
+  });
+
+  useEffect(() => {
+    AsyncStorage.getItem('user').then((data) => {
+      const user = JSON.parse(data || `{username: 'John Doe'}`);
+      setUser(user);
+    });
+  }, []);
   return (
     <ScrollView style={styles.containerUser}>
        {/* User Header */}
        <UserContainer
-        name={user.name}
-        address={user.address}
-        profileImage={user.profileImage}
+        name={user.username}
+        address={""}
+        profileImage={""}
       />
       {/* Home Section */}
       <HomeContent />
       {/* Weather Section */}
       <WeatherContent />
       {/* Billing Section */}
-      <BillingContent />
+      {/* <BillingContent /> */}
       {/* Account Section */}
       <RecommendationsContent />
       {/* Insights Section */}
-      <InsightsContent />
+      {/* <InsightsContent /> */}
     </ScrollView>
   );
 };
