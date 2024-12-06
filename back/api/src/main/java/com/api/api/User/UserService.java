@@ -33,7 +33,7 @@ public class UserService {
 
     // Get a user by userName
     public Optional<User> getUserByUserName(String userName) {
-        return Optional.ofNullable(userRepository.findByUserName(userName));
+        return userRepository.findByUserName(userName);
     }
 
     public Optional<User> updateUserById(String id, User user) {

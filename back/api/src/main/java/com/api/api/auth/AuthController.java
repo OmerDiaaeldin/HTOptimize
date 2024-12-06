@@ -48,7 +48,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
+    public LoginObject login(@RequestBody User user) {
         System.out.println("Being executed");
         System.out.println(user);
         try {
@@ -56,11 +56,15 @@ public class AuthController {
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
             );
 
-            return jwtUtil.generateToken(user.getUserName());
+        String userName = user.getUserName();
+        String houseId = userService.getUserByUserName(userName).get().getHouse().getId();
+        String jwt = jwtUtil.generateToken(user.getUserName());
+
+        return new LoginObject(userName, jwt, houseId);
         } catch (Exception e) {
             System.out.println("Error: " + e);
-            return e.getMessage();
-            // throw new RuntimeException("Invalid username/password");
+            // return e.getMessage();
+            throw new RuntimeException("Invalid username/password");
         }
     }
 }
