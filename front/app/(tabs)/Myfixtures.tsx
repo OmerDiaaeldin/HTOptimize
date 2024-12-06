@@ -1,13 +1,19 @@
+import apiClient from '@/api';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Switch, FlatList } from 'react-native';
 
 const App = () => {
   const [masterSwitch, setMasterSwitch] = useState(false); // Master switch state
   const [taps, setTaps] = useState([
-    { id: '1', name: 'Kitchen Tap', isOn: true },
-    { id: '2', name: 'Bathroom Tap', isOn: false },
-    { id: '3', name: 'Garden Tap', isOn: true },
+    { id: '1', name: 'Kitchen Tap', isOn: true }
   ]);
+
+  useEffect(() => {
+    apiClient.get('/fixtures').then((response) => {
+      setTaps(response.data);
+      console.log(response.data);
+    });
+  }, []);
 
   // Synchronize master switch with individual taps
   useEffect(() => {
@@ -45,10 +51,10 @@ const App = () => {
       <Text style={styles.title}>Water Tap Control</Text>
 
       {/* Master Switch */}
-      <View style={[styles.tapContainer, styles.masterSwitchContainer]}>
-        <Text style={styles.label}>Switch off all taps</Text>
-        <Switch value={masterSwitch} onValueChange={toggleMasterSwitch} />
-      </View>
+      {/* <View style={[styles.tapContainer, styles.masterSwitchContainer]}>
+        {/* <Text style={styles.label}>Switch off all taps</Text>
+        <Switch value={masterSwitch} onValueChange={toggleMasterSwitch} /> */}
+      {/* </View> */}
 
       {/* List of Taps */}
       <FlatList
@@ -57,7 +63,12 @@ const App = () => {
         renderItem={({ item }) => (
           <View style={styles.tapContainer}>
             <Text style={styles.tapName}>{item.name}</Text>
-            <Switch value={item.isOn} onValueChange={() => toggleTap(item.id)} />
+            <Switch value={item.isOn} onValueChange={async () => {
+              toggleTap(item.id);
+              console.log("inside")
+              console.log(item)
+              await apiClient.put(`/fixtures/${item.id}`, { ...item, isOn: !item.isOn });
+            }} />
           </View>
         )}
       />

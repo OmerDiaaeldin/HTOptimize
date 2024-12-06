@@ -49,8 +49,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public LoginObject login(@RequestBody User user) {
-        System.out.println("Being executed");
-        System.out.println(user);
         try {
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword())
