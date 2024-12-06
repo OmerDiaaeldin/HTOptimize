@@ -3,6 +3,7 @@ package com.api.api.Fixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,8 @@ public class FixtureService {
 
     // Create a new fixture
     public Fixture createFixture(Fixture fixture) {
+        fixture.setLastOn(LocalDateTime.now());
+        System.out.println("Creating fixture Service");
         return fixtureRepository.save(fixture);
     }
 
@@ -44,6 +47,7 @@ public class FixtureService {
                     existingFixture.setOn(updatedFixture.isOn());
                     existingFixture.setMaximumRate(updatedFixture.getMaximumRate());
                     existingFixture.setHouse(updatedFixture.getHouse());
+                    existingFixture.setConsumption(updatedFixture.getConsumption());
                     return fixtureRepository.save(existingFixture);
                 })
                 .orElseThrow(() -> new RuntimeException("Fixture not found with ID: " + id));

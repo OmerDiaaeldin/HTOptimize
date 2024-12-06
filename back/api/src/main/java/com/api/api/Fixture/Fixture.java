@@ -16,6 +16,8 @@ public class Fixture {
     @Id
     private String id; // MongoDB's unique identifier (_id field)
 
+    private String name; // Represents the name of the fixture
+
     private boolean on; // Represents the on/off state of the fixture
     private float maximumRate; // Represents the maximum rate (e.g., wattage, speed)
 
@@ -45,6 +47,14 @@ public class Fixture {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public boolean isOn() {

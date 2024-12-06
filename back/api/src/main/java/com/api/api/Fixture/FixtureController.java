@@ -22,6 +22,8 @@ public class FixtureController {
     // Create a new fixture
     @PostMapping
     public Fixture createFixture(@RequestBody Fixture fixture) {
+        System.out.println("Creating fixture Controller");
+        System.out.println(fixture);
         return fixtureService.createFixture(fixture);
     }
 
@@ -46,11 +48,16 @@ public class FixtureController {
             LocalDateTime now = LocalDateTime.now();
             LocalDateTime lastOn = fixture.getLastOn();
 
-            long seconds = ChronoUnit.SECONDS.between(now, lastOn);
+            long seconds = ChronoUnit.MINUTES.between(lastOn, now);
             List<Float> updatedConsumption = fixture.getConsumption();
             updatedConsumption.set(updatedConsumption.size()-1,updatedConsumption.get(updatedConsumption.size()-1) + seconds);
+            System.out.println("Flag");
+            System.out.println(seconds);
+            System.out.println(updatedConsumption);
             updatedFixture.setConsumption(updatedConsumption);
         }
+        System.out.println("Updating fixture: ");
+        System.out.println(updatedFixture);
         return fixtureService.updateFixture(id, updatedFixture);
     }
 
