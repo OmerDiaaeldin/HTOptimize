@@ -1,26 +1,38 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, View, TextInput, Text, StyleSheet } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { TouchableOpacity, View, TextInput, Text, StyleSheet, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import Background from '@/components/Background';
 import Logo from '@/components/Logo';
 import Header from '@/components/Header';
 import Button from '@/components/Button';
-
+import apiClient from "../api"
+import { useAuth } from '@/auth/AuthContext';
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showResetPassword, setShowResetPassword] = useState(false); // State to toggle reset screen visibility
 
   const router = useRouter(); // Access the router for navigation
+  const { login } = useAuth();
+
 
   
 
-  const handleLogin = () => {
-    if (username && password) {
-      alert('Logged in successfully!');
-      router.push('/Home');
-    } else {
-      alert('Please enter valid credentials');
+  const handleLogin = async () => {
+    try {
+      const response = await apiClient.post('/auth/login', {
+        userName: username,
+        password,
+      });
+      if (response.data) {
+        login(response.data);
+        router.push('/Home');
+        Alert.alert('Login successful');
+      } else {
+        Alert.alert('Login failed');
+      }
+    } catch (error) {
+      Alert.alert('Login Error', 'Unable to log in');
     }
   };
 
