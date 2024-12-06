@@ -3,6 +3,7 @@ package com.api.api.Fixture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,10 @@ public class FixtureService {
     // Get a fixture by ID
     public Optional<Fixture> getFixtureById(String id) {
         return fixtureRepository.findById(id);
+    }
+
+    public ArrayList<Float> getConsumptionById(String id) {
+        return fixtureRepository.findById(id).get().getConsumption();
     }
 
     // Update a fixture
