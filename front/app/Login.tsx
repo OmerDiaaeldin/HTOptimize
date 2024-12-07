@@ -36,8 +36,9 @@ export default function Login() {
       } else {
         Alert.alert('Login failed');
       }
-    } catch (error) {
-      Alert.alert('Login Error', 'Unable to log in');
+    } catch (error:Error) { 
+      Alert.alert(error.message)
+      //Alert.alert('Login Error', 'Unable to log in');
     }
   };
 

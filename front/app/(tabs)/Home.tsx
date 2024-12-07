@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import MenuItem from '../../components/HomePage/MenuItem';
+import { ScrollView, StyleSheet, Dimensions, View, SafeAreaView } from 'react-native';
 import HomeContent from '../../components/HomePage/HomeContent';
 import WeatherContent from '../../components/HomePage/WeatherContent';
-import BillingContent from '../../components/HomePage/BillingContent';
 import RecommendationsContent from '../../components/HomePage/RecommendationsContent';
-import InsightsContent from '../../components/HomePage/InsightsContent';
 import UserContainer from '@/components/UserContainer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Chatbot from 'react-chatbotify';
 
-
+const { width, height } = Dimensions.get('window');
 
 const Home = () => {
-  const [activeTab, setActiveTab] = useState('home');
-
   const [user, setUser] = useState({
-    username: 'John Doe',
+    username: 'Yahya',
   });
 
   useEffect(() => {
@@ -24,49 +20,54 @@ const Home = () => {
       setUser(user);
     });
   }, []);
+
   return (
-    <ScrollView style={styles.containerUser}>
-       {/* User Header */}
-       <UserContainer
-        name={user.username}
-        address={""}
-        profileImage={""}
-      />
-      {/* Home Section */}
-      <HomeContent />
-      {/* Weather Section */}
-      <WeatherContent />
-      {/* Billing Section */}
-      {/* <BillingContent /> */}
-      {/* Account Section */}
-      <RecommendationsContent />
-      {/* Insights Section */}
-      {/* <InsightsContent /> */}
-    </ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      {/* Chatbot at the Top Right */}
+      <View style={styles.chatbotContainer}>
+        <Chatbot
+          styles={{
+            chatButtonStyle: {
+              backgroundColor: "#00bfff", // Customize chat button color
+              width: 60, // Adjust button size
+              height: 60, // Adjust button size
+              borderRadius: 30, // Make button circular
+            },
+            notificationBadgeStyle: {
+              backgroundColor: "3399FF", // Adjust background color of message box
+              color: "#fff", // Set message text color
+            },
+          }}
+        />
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        {/* User Header */}
+        <UserContainer name={user.username} address={""} profileImage={""} />
+        
+        {/* Home Section */}
+        <HomeContent />
+        
+        {/* Weather Section */}
+        <WeatherContent />
+        
+        {/* Recommendations Section */}
+        <RecommendationsContent />
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F0F0F0',
-    padding: 20,
+  scrollViewContent: {
+    paddingBottom: 0, // Removed padding at the bottom to remove unnecessary space
   },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  menu: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-  },
-  containerUser: {
-    padding: 20, // Adjust padding as needed
-    backgroundColor: '#F0F0F0',
+  chatbotContainer: {
+    position: 'fixed',  // Ensure fixed position on the screen
+    top: '10%',  // Adjust top percentage to be dynamic and responsive
+    right: 20,
+    zIndex: 10, // Ensure chatbot is on top
+    paddingBottom: 10, // Add padding to avoid cut-off on some devices
   },
 });
 
