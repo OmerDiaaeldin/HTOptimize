@@ -119,14 +119,14 @@ const App = () => {
       {/* Water Consumption Graph */}
       <View style={styles.graphContainer}>
         <Text style={styles.graphTitle}>Water Consumption</Text>
-        {(
+        
           <LineChart
             data={consumptionData} // Pass the data to the chart
             width={Dimensions.get("window").width}
             height={220}
             chartConfig={chartConfig}
           />
-        )}
+
       </View>
 
       {/* Current Bill Total */}
