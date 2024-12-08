@@ -26,7 +26,7 @@ const WeatherContent = () => {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Weather Information</Text>
+      <Text style={styles.title}></Text>
       <WeatherCard data={weatherData}/>
     </View>
   );
@@ -34,10 +34,23 @@ const WeatherContent = () => {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%', // Adjust width as needed (can be fixed or percentage of screen width)
+    maxWidth: 400, // Optional: Max width for larger screens
     backgroundColor: '#FFF',
-    padding: 15,
-    borderRadius: 8,
+    padding: 25,
+    borderRadius: 12,
+    borderColor: '#FFF', // Border color for the box
+    borderWidth: 2, // Adds a solid border
+    shadowColor: '#000', // Darker shadow color for a more prominent effect
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 7,
+    shadowOpacity: 0.3, // Increased opacity for a stronger shadow effect
+    elevation: 5, // For Android shadow effect
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
+
   title: {
     fontSize: 18,
     fontWeight: 'bold',

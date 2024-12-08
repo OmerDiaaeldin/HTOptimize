@@ -25,17 +25,22 @@ const UserContainer: React.FC<UserContainerProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row', // Aligns image and text side-by-side
-    alignItems: 'center', // Center vertically
+    width: '100%', // Adjust width as needed (can be fixed or percentage of screen width)
+    maxWidth: 400, // Optional: Max width for larger screens
     backgroundColor: '#FFF',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 20, // Space below the container
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 3, // Adds shadow for Android
+    padding: 20,
+    borderRadius: 12,
+    borderColor: '#FFF', // Border color for the box
+    shadowColor: '#000', // Darker shadow color for a more prominent effect
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 7,
+    shadowOpacity: 0.3, // Increase opacity for a stronger shadow effect
+    elevation: 5, // For Android shadow effect
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 5,
+    borderWidth: 2,
+    margin: 1,
   },
   image: {
     width: 60, // Adjust image size
@@ -47,7 +52,7 @@ const styles = StyleSheet.create({
     flex: 1, // Allow text to expand as needed
   },
   greeting: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
   },

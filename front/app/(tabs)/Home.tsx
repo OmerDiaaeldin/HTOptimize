@@ -6,6 +6,7 @@ import RecommendationsContent from '../../components/HomePage/RecommendationsCon
 import UserContainer from '@/components/UserContainer';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Chatbot from 'react-chatbotify';
+import InsightsContent from '@/components/HomePage/InsightsContent';
 
 const { width, height } = Dimensions.get('window');
 
@@ -24,29 +25,16 @@ const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {/* Chatbot at the Top Right */}
-      <View style={styles.chatbotContainer}>
-        <Chatbot
-          styles={{
-            chatButtonStyle: {
-              backgroundColor: "#00bfff", // Customize chat button color
-              width: 60, // Adjust button size
-              height: 60, // Adjust button size
-              borderRadius: 30, // Make button circular
-            },
-            notificationBadgeStyle: {
-              backgroundColor: "3399FF", // Adjust background color of message box
-              color: "#fff", // Set message text color
-            },
-          }}
-        />
-      </View>
+    
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         {/* User Header */}
         <UserContainer name={user.username} address={""} profileImage={""} />
-        
-        {/* Home Section */}
+
         <HomeContent />
+
+        <InsightsContent/>
+        
         
         {/* Weather Section */}
         <WeatherContent />
@@ -71,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Home;  

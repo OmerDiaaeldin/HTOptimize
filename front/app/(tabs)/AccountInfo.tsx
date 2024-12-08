@@ -8,6 +8,8 @@ import ChangePassword from "@/components/Account/ChangePassword";
 import TwoFactorAuth from "@/components/Account/TwoFactorAuth";
 import LogOut from "@/components/Account/LogOut";
 
+
+
 const AccountInfo = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [currentScreen, setCurrentScreen] = useState("account"); // Default to 'account' screen

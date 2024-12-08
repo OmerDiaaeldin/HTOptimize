@@ -4,6 +4,8 @@ import { Tabs } from 'expo-router';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
+import TabBar from '@/components/TabBar/TabBar'
+
 
 // TabBarIcon component
 function TabBarIcon(props: { name: React.ComponentProps<typeof FontAwesome>['name']; color: string }) {
@@ -15,10 +17,11 @@ export default function TabLayout() {
 
   return (
     <Tabs
+      tabBar={props=> <TabBar {...props} />}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        tabBarStyle: { backgroundColor: "#ADD8e6" },
-        headerStyle: { backgroundColor: "#ADD8e6" },
+        //tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        //tabBarStyle: { backgroundColor: "#ADD8e6" },
+        //headerStyle: { backgroundColor: "#ADD8e6" },
         headerShown: false,
         tabBarShowLabel: false, // This hides the tab labels
       }}
@@ -26,25 +29,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="Home"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-        }}
+          title: "Home"
+          }}
       />
       <Tabs.Screen
         name="Myfixtures"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="shower" color={color} />,
+          //tabBarIcon: ({ color }) => <TabBarIcon name="shower" color={color} />,
         }}
       />
       <Tabs.Screen
         name="Billing"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="dollar" color={color} />,
+          //tabBarIcon: ({ color }) => <TabBarIcon name="dollar" color={color} />,
         }}
       />
       <Tabs.Screen
         name="AccountInfo"
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          //tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
     </Tabs>
