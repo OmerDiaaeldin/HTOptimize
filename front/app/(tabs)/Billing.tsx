@@ -19,8 +19,18 @@ const App = () => {
   const [currentTotal, setCurrentTotal] = useState(0);
   const [currentBillTotal, setCurrentBillTotal] = useState(currentTotal * ratePerLiter);
 
+  
+  const [predictedTotal, setPredictedTotal] = useState(0);
+  const [predictedBillTotal, setPredictedBillTotal] = useState(predictedTotal * ratePerLiter);
+
   // Define data for the chart
   const [consumptionData, setConsumptionData] = useState({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
+
+  // Define data for the chart
+  const [predictionData, setPredictionData] = useState({
     labels: [],
     datasets: [{ data: [] }],
   });
@@ -36,7 +46,6 @@ const App = () => {
       const houseId = user.houseId;
       return apiClient.get(`/house/consumption/${houseId}`)})
     .then((response) => {
-      console.log("response", response.data)
       setConsumptionData((prevData) => {
         const data = response.data.reverse();
         return {
@@ -48,9 +57,16 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setCurrentTotal(consumptionData.datasets[0].data.slice(0,Math.min(consumptionData.datasets[0].data.length,30)).reduce((acc: any, curr: any) => acc + curr, 0));
-    setCurrentBillTotal(currentTotal * ratePerLiter);
-  }, [consumptionData, currentTotal, ratePerLiter]);
+    setCurrentTotal(Math.round(consumptionData.datasets[0].data.slice(0,Math.min(consumptionData.datasets[0].data.length,30)).reduce((acc: any, curr: any) => acc + curr, 0)));
+    setCurrentBillTotal(Math.round(currentTotal * ratePerLiter));
+  }, [consumptionData, ratePerLiter]);
+
+  
+  useEffect(() => {
+    console.log(predictionData.datasets[0].data);
+    setPredictedTotal(Math.round(predictionData.datasets[0].data.slice(0,Math.min(predictionData.datasets[0].data.length,30)).reduce((acc: any, curr: any) => acc + curr, 0)));
+    setPredictedBillTotal(Math.round(predictedTotal * ratePerLiter));
+  }, [predictionData, ratePerLiter]);
 
   const chartConfig = {
     backgroundColor: '#ffffff',
@@ -62,6 +78,7 @@ const App = () => {
     style: {
       borderRadius: 16,
     },
+    
   };
 
   // Render different screens based on currentScreen
@@ -88,8 +105,20 @@ const App = () => {
     return (
       <View style={styles.detailsContainer}>
         <Text style={styles.detailsTitle}>AI Payment Prediction</Text>
+        <View style={styles.graphContainer}>
+        <Text style={styles.graphTitle}>Water Consumption</Text>
+        
+          <LineChart
+            data={predictionData} // Pass the data to the chart
+            width={Dimensions.get("window").width}
+            height={220}
+            chartConfig={chartConfig}
+            fromZero={true} // Ensure the y-axis starts at 0
+          />
+
+      </View>
         <Text style={styles.detailsText}>
-          Based on your history, your next payment is estimated to be MAD 250.
+          {`Based on your history, your next payment is estimated to be MAD ${predictedBillTotal}.`}
         </Text>
         <TouchableOpacity
           style={styles.backButton}
@@ -140,7 +169,18 @@ const App = () => {
       {/* AI Prediction Window */}
       <TouchableOpacity
         style={styles.card}
-        onPress={() => setCurrentScreen('AIPrediction')}
+        onPress={async () => {
+          // Make the POST request
+        const response = await fetch(`http://localhost:5000/predict`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(consumptionData), // Convert the payload to a JSON string
+          }).then((response) => response.json());
+          setPredictionData({...predictionData,datasets: [{ data: response }]});
+          setCurrentScreen('AIPrediction')
+        }}
       >
         <Text style={styles.cardTitle}>AI Payment Prediction</Text>
         <Text>Click to view prediction for the next period</Text>
