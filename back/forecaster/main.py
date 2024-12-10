@@ -16,11 +16,11 @@ model = joblib.load('lgb.pkl')
 @app.route('/predict', methods=['POST'])
 def predict():
     # Get the input data from the request
-    data = request.get_json()
+    data = request.get_json()['datasets'][0]['data']
     print("TOP LEVEL DATA:", data)
 
     # Check if 'features' is part of the request and contains the expected values
-    consumption = data.get('consumption')
+    consumption = data
 
 
     today = datetime.today().date()
