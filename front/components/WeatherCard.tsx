@@ -22,8 +22,8 @@ const WeatherCards = ({ data }: {data: any}) => {
   );
 };
 
-export default function App() {
-  const weatherData = {
+export default function App(data: any) {
+  const DummyWeatherData = {
     interval: "900 seconds",
     rain: "0 mm",
     relative_humidity_2m: "32 %",
@@ -32,8 +32,7 @@ export default function App() {
     temperature_2m: "11.4 °C",
     time: "2024-12-06T18:00 iso8601",
   };
-
-  return <WeatherCards data={weatherData} />;
+  return <WeatherCards data={data?.data || DummyWeatherData} />;
 }
 
 const styles = StyleSheet.create({
