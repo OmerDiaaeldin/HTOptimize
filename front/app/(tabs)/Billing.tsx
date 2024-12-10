@@ -48,7 +48,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    setCurrentTotal(consumptionData.datasets[0].data.reduce((acc: any, curr: any) => acc + curr, 0));
+    setCurrentTotal(consumptionData.datasets[0].data.slice(0,Math.min(consumptionData.datasets[0].data.length,30)).reduce((acc: any, curr: any) => acc + curr, 0));
     setCurrentBillTotal(currentTotal * ratePerLiter);
   }, [consumptionData, currentTotal, ratePerLiter]);
 
