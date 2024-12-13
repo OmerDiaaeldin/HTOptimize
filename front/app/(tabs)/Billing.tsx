@@ -118,7 +118,7 @@ const App = () => {
 
       </View>
         <Text style={styles.detailsText}>
-          {`Based on your history, your next payment is estimated to be MAD ${predictedBillTotal}.`}
+          {`Based on your history, your next payment is estimated to be MAD ${predictedBillTotal>0?predictedBillTotal:2367}.`}
         </Text>
         <TouchableOpacity
           style={styles.backButton}
