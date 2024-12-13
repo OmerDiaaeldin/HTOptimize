@@ -19,7 +19,6 @@ const WeatherContent = () => {
             const unit = data.current_units[key]
             result[key] = `${value} ${unit}`
           }
-          console.log(result)
           setWeatherData(result);
         });
     });

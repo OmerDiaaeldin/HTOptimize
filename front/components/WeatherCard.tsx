@@ -30,8 +30,9 @@ export default function App(data: any) {
     showers: "0 mm",
     snowfall: "0 cm",
     temperature_2m: "11.4 °C",
-    time: "2024-12-06T18:00 iso8601",
+    time: "2024-12-14T11:30 iso8601",
   };
+  console.log(data)
   return <WeatherCards data={data?.data || DummyWeatherData} />;
 }
 
